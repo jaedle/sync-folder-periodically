@@ -7,6 +7,11 @@ create_output_streams() {
   chmod 0666 /tmp/stdout /tmp/stderr
 }
 
+attach_to_cron_output() {
+  tail -f /tmp/stdout &
+  tail -f /tmp/stderr >&2 &
+}
+
 set_crontab() {
   rm -rf /etc/cron.d/
   mkdir /etc/cron.d/
@@ -15,11 +20,6 @@ set_crontab() {
   # crontab requires an empty line at the end of the file" > /etc/cron.d/crontab
 
   crontab /etc/cron.d/crontab
-}
-
-attach_to_cron_output() {
-  tail -f /tmp/stdout &
-  tail -f /tmp/stderr >&2 &
 }
 
 start_cron() {
