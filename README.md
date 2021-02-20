@@ -21,5 +21,5 @@ docker container run \
     --env SOURCE_PATH='gdrive:/subfolder'
     --mount type=bind,source="$PWD/rclone.conf",target=/rclone.conf,readonly \
     --mount type=bind,source="$PWD/output",target=/output \
-    jaedle/sync-folder-periodically:arm32v7-latest
+    jaedle/sync-folder-periodically:latest-arm32v7
 ```
