@@ -16,6 +16,11 @@ validate_inputs() {
   [[ -w /output ]] || die 'please mount a writable folder on /output'
 }
 
+copy_configuration() {
+  rm -f /app/rclone.conf
+  cp /rclone.conf /app/rclone.conf
+}
+
 create_output_streams() {
   mkfifo /tmp/stdout /tmp/stderr
   chmod 0666 /tmp/stdout /tmp/stderr
@@ -30,7 +35,7 @@ set_crontab() {
   rm -rf /etc/cron.d/
   mkdir /etc/cron.d/
 
-  echo "$CRON_EXPRESSION rclone --config /rclone.conf sync '$SOURCE_PATH' /output > /tmp/stdout 2> /tmp/stderr
+  echo "$CRON_EXPRESSION rclone --config /app/rclone.conf sync '$SOURCE_PATH' /output > /tmp/stdout 2> /tmp/stderr
   # crontab requires an empty line at the end of the file" > /etc/cron.d/crontab
 
   crontab /etc/cron.d/crontab
@@ -41,6 +46,7 @@ start_cron() {
 }
 
 validate_inputs
+copy_configuration
 create_output_streams
 attach_to_cron_output
 set_crontab
