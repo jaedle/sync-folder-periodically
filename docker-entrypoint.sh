@@ -23,7 +23,7 @@ set_crontab() {
 }
 
 start_cron() {
-  cron -f -l 2
+  cron -f
 }
 
 create_output_streams
