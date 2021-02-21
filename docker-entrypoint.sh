@@ -22,6 +22,7 @@ copy_configuration() {
 }
 
 create_output_streams() {
+  rm -f /tmp/stdout /tmp/stderr
   mkfifo /tmp/stdout /tmp/stderr
   chmod 0666 /tmp/stdout /tmp/stderr
 }
